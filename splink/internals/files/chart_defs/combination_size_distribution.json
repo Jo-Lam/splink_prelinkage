@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Exact-signature cardinality distribution",
+    "subtitle": "Share of usable records in exact-signature groups of each size"
+  },
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null},
+    "y": {
+      "field": "column_combination",
+      "type": "nominal",
+      "title": "Exact PII signature",
+      "sort": {"field": "combination_order", "order": "ascending"}
+    },
+    "x": {
+      "field": "usable_record_share",
+      "type": "quantitative",
+      "title": "Share of usable records",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"},
+      "stack": "zero"
+    },
+    "color": {
+      "field": "cardinality_bucket",
+      "type": "ordinal",
+      "title": "Rows sharing a signature",
+      "sort": {"field": "bucket_order", "order": "ascending"},
+      "scale": {
+        "domain": ["1", "2", "3", "4", "5-9", "10-19", "20-49", "50-99", "100+"],
+        "range": ["#2a9d8f", "#77bfa3", "#a8d5ba", "#d3e7cf", "#e9c46a", "#f4a261", "#e76f51", "#c9514b", "#8f2d3f"]
+      }
+    },
+    "tooltip": [
+      {"field": "column_combination", "type": "nominal", "title": "Columns"},
+      {"field": "cardinality_bucket", "type": "ordinal", "title": "Group size"},
+      {"field": "signature_groups", "type": "quantitative", "title": "Signature groups", "format": ","},
+      {"field": "records", "type": "quantitative", "title": "Records", "format": ","},
+      {"field": "usable_record_share", "type": "quantitative", "title": "Usable-record share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

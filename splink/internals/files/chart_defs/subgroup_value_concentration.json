@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Cumulative value concentration by auxiliary group",
+    "subtitle": "Curves use observed values within each group; identifier values are not shown"
+  },
+  "mark": {"type": "line", "point": false},
+  "encoding": {
+    "column": {"field": "column_name", "type": "nominal", "title": "Linkage column", "sort": {"field": "column_order", "order": "ascending"}},
+    "row": {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column", "sort": {"field": "auxiliary_order", "order": "ascending"}},
+    "x": {
+      "field": "cumulative_distinct_value_share",
+      "type": "quantitative",
+      "title": "Cumulative share of distinct values",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"}
+    },
+    "y": {
+      "field": "cumulative_record_share",
+      "type": "quantitative",
+      "title": "Cumulative share of observed records",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"}
+    },
+    "color": {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+    "strokeDash": {"field": "source_dataset", "type": "nominal", "title": "Input"},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+      {"field": "column_name", "type": "nominal", "title": "Linkage column"},
+      {"field": "value_rank", "type": "quantitative", "title": "Value rank", "format": ","},
+      {"field": "cumulative_record_share", "type": "quantitative", "title": "Record share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

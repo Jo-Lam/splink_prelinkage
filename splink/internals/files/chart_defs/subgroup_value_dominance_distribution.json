@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Full value-frequency distribution by auxiliary group",
+    "subtitle": "Every distinct linkage value is represented by frequency; identifier values are not shown"
+  },
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "column": {"field": "column_name", "type": "nominal", "title": "Linkage column", "sort": {"field": "column_order", "order": "ascending"}},
+    "row": {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column", "sort": {"field": "auxiliary_order", "order": "ascending"}},
+    "x": {
+      "field": "frequency",
+      "type": "quantitative",
+      "title": "Records sharing a value",
+      "scale": {"type": "log"}
+    },
+    "y": {
+      "field": "record_share",
+      "type": "quantitative",
+      "title": "Share of observed records",
+      "axis": {"format": ".1%"}
+    },
+    "color": {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+    "strokeDash": {"field": "source_dataset", "type": "nominal", "title": "Input"},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+      {"field": "column_name", "type": "nominal", "title": "Linkage column"},
+      {"field": "frequency", "type": "quantitative", "title": "Frequency", "format": ","},
+      {"field": "values_at_frequency", "type": "quantitative", "title": "Distinct values", "format": ","},
+      {"field": "records_at_frequency", "type": "quantitative", "title": "Records", "format": ","},
+      {"field": "record_share", "type": "quantitative", "title": "Record share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

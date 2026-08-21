@@ -1,0 +1,25 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Value-frequency distribution compared with reference",
+    "subtitle": "Direct aggregate overlay; identifier values are not included"
+  },
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "column": {"field": "column_name", "type": "nominal", "title": "PII field", "sort": {"field": "column_order", "order": "ascending"}},
+    "x": {"field": "frequency", "type": "quantitative", "title": "Records sharing a value", "scale": {"type": "log"}},
+    "y": {"field": "record_share", "type": "quantitative", "title": "Share of observed records", "axis": {"format": ".1%"}},
+    "color": {"field": "profile_label", "type": "nominal", "title": "Profile"},
+    "tooltip": [
+      {"field": "profile_label", "type": "nominal", "title": "Profile"},
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "column_name", "type": "nominal", "title": "PII field"},
+      {"field": "frequency", "type": "quantitative", "title": "Frequency", "format": ","},
+      {"field": "values_at_frequency", "type": "quantitative", "title": "Distinct values", "format": ","},
+      {"field": "records_at_frequency", "type": "quantitative", "title": "Records", "format": ","},
+      {"field": "record_share", "type": "quantitative", "title": "Record share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

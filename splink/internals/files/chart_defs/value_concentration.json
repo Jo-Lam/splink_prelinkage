@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Cumulative linkage-value concentration",
+    "subtitle": "A steep curve indicates that a small share of distinct values covers many records"
+  },
+  "mark": {"type": "line", "point": false},
+  "encoding": {
+    "facet": {
+      "field": "source_dataset",
+      "type": "nominal",
+      "columns": 1,
+      "title": null
+    },
+    "x": {
+      "field": "cumulative_distinct_value_share",
+      "type": "quantitative",
+      "title": "Cumulative share of distinct values, most frequent first",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"}
+    },
+    "y": {
+      "field": "cumulative_record_share",
+      "type": "quantitative",
+      "title": "Cumulative share of observed records",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"}
+    },
+    "color": {"field": "column_name", "type": "nominal", "title": "Column", "sort": {"field": "column_order", "order": "ascending"}},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "column_name", "type": "nominal", "title": "Column"},
+      {"field": "value_rank", "type": "quantitative", "title": "Value rank", "format": ","},
+      {"field": "cumulative_distinct_value_share", "type": "quantitative", "title": "Distinct-value share", "format": ".1%"},
+      {"field": "cumulative_record_share", "type": "quantitative", "title": "Record share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

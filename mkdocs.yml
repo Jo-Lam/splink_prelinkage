@@ -241,6 +241,7 @@ nav:
         - Backends overview: "topic_guides/splink_fundamentals/backends/backends.md"
         - PostgreSQL: "topic_guides/splink_fundamentals/backends/postgres.md"
     - Data Preparation:
+      - Pre-linkage quality assessment: "topic_guides/data_preparation/pre_linkage_quality.md"
       - Feature Engineering: "topic_guides/data_preparation/feature_engineering.md"
     - Blocking:
       - What are Blocking Rules?: "topic_guides/blocking/blocking_rules.md"

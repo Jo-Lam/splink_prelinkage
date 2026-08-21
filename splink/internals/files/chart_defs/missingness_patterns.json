@@ -1,0 +1,22 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Most common joint missingness patterns",
+    "subtitle": "Each label identifies the linkage columns missing together"
+  },
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null},
+    "y": {"field": "missing_fields", "type": "nominal", "title": "Missing columns", "sort": "-x"},
+    "x": {"field": "record_share", "type": "quantitative", "title": "Record share", "axis": {"format": ".1%"}},
+    "color": {"field": "missing_field_count", "type": "ordinal", "title": "Number missing"},
+    "tooltip": [
+      {"field": "missing_fields", "type": "nominal", "title": "Missing"},
+      {"field": "present_fields", "type": "nominal", "title": "Still present"},
+      {"field": "records", "type": "quantitative", "title": "Records", "format": ","},
+      {"field": "record_share", "type": "quantitative", "title": "Share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

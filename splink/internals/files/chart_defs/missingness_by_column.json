@@ -1,0 +1,17 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {"text": "Missingness by linkage column"},
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null},
+    "x": {"field": "column_name", "type": "nominal", "title": "Column", "sort": {"field": "column_order", "order": "ascending"}, "axis": {"labelAngle": -30}},
+    "y": {"field": "missing_record_share", "type": "quantitative", "title": "Missing record share", "axis": {"format": ".0%"}},
+    "tooltip": [
+      {"field": "column_name", "type": "nominal", "title": "Column"},
+      {"field": "missing_rows", "type": "quantitative", "title": "Missing rows", "format": ","},
+      {"field": "missing_record_share", "type": "quantitative", "title": "Missing share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

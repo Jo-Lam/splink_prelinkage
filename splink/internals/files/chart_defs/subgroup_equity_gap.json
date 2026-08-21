@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Largest adverse subgroup data-quality gaps",
+    "subtitle": "Percentage-point gaps from the dataset average; descriptive triage, not a statistical test"
+  },
+  "transform": [
+    {"calculate": "datum.auxiliary_column + ' | ' + datum.auxiliary_value + ' | ' + datum.item", "as": "group_item"}
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "y": {"field": "group_item", "type": "nominal", "title": null, "sort": "x"},
+    "x": {"field": "largest_adverse_gap", "type": "quantitative", "title": "Largest adverse gap from dataset average", "axis": {"format": "+.0%"}},
+    "color": {
+      "field": "flag_level",
+      "type": "nominal",
+      "title": "Descriptive flag",
+      "scale": {
+        "domain": ["priority review", "review", "monitor", "no material aggregate flag"],
+        "range": ["#a53f3f", "#e76f51", "#e9c46a", "#6c8f8b"]
+      }
+    },
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "assessment_level", "type": "nominal", "title": "Level"},
+      {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+      {"field": "item", "type": "nominal", "title": "PII field or combination"},
+      {"field": "adverse_metric", "type": "nominal", "title": "Driving metric"},
+      {"field": "largest_adverse_gap", "type": "quantitative", "title": "Gap", "format": "+.1%"},
+      {"field": "group_records", "type": "quantitative", "title": "Group rows", "format": ","}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

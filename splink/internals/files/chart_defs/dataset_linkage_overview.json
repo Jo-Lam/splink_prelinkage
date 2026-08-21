@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Dataset-level structural linkage overview",
+    "subtitle": "Within-input data constraints; not expected linkage accuracy"
+  },
+  "transform": [
+    {
+      "fold": [
+        "complete_pii_share",
+        "usable_pii_share",
+        "unique_full_signature_share",
+        "maximum_one_to_one_assignment_share"
+      ],
+      "as": ["metric", "share"]
+    },
+    {
+      "calculate": "datum.metric === 'complete_pii_share' ? 'All PII complete' : datum.metric === 'usable_pii_share' ? 'At least one PII usable' : datum.metric === 'unique_full_signature_share' ? 'Rows with unique full signature' : 'Maximum distinct 1:1 assignments'",
+      "as": "metric_label"
+    },
+    {
+      "calculate": "datum.metric === 'complete_pii_share' ? 1 : datum.metric === 'usable_pii_share' ? 2 : datum.metric === 'unique_full_signature_share' ? 3 : 4",
+      "as": "metric_order"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null, "sort": {"field": "dataset_order", "order": "ascending"}},
+    "y": {"field": "metric_label", "type": "nominal", "title": null, "sort": {"field": "metric_order", "order": "ascending"}},
+    "x": {"field": "share", "type": "quantitative", "title": "Share of submitted rows", "scale": {"domain": [0, 1]}, "axis": {"format": ".0%"}},
+    "color": {
+      "field": "metric_label",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "domain": ["All PII complete", "At least one PII usable", "Rows with unique full signature", "Maximum distinct 1:1 assignments"],
+        "range": ["#2a9d8f", "#457b9d", "#e9c46a", "#e76f51"]
+      }
+    },
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "total_rows", "type": "quantitative", "title": "Rows", "format": ","},
+      {"field": "metric_label", "type": "nominal", "title": "Measure"},
+      {"field": "share", "type": "quantitative", "title": "Share", "format": ".1%"},
+      {"field": "exact_duplicate_records", "type": "quantitative", "title": "Exact duplicate records", "format": ","},
+      {"field": "record_id_missing_rows", "type": "quantitative", "title": "Missing record IDs", "format": ","},
+      {"field": "record_id_duplicate_records", "type": "quantitative", "title": "Rows with duplicate IDs", "format": ","}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

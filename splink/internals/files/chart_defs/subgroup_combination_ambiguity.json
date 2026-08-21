@@ -1,0 +1,45 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Exact-signature ambiguity by auxiliary group",
+    "subtitle": "Within-group structural uniqueness; not observed linkage performance"
+  },
+  "transform": [
+    {
+      "fold": ["unique_record_share", "ambiguous_record_share", "unusable_record_share"],
+      "as": ["metric", "share"]
+    },
+    {
+      "calculate": "datum.metric === 'unique_record_share' ? 'Unique signature' : datum.metric === 'ambiguous_record_share' ? 'Ambiguous signature' : 'No usable value'",
+      "as": "metric_label"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "column_combination", "type": "nominal", "title": "PII combination", "sort": {"field": "combination_order", "order": "ascending"}},
+    "row": {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column", "sort": {"field": "auxiliary_order", "order": "ascending"}},
+    "x": {"field": "auxiliary_value", "type": "nominal", "title": "Auxiliary value", "sort": {"field": "group_records", "order": "descending"}, "axis": {"labelAngle": -30}},
+    "y": {"field": "share", "type": "quantitative", "title": "Share of group rows", "scale": {"domain": [0, 1]}, "axis": {"format": ".0%"}, "stack": "zero"},
+    "color": {
+      "field": "metric_label",
+      "type": "nominal",
+      "title": "Signature status",
+      "scale": {
+        "domain": ["Unique signature", "Ambiguous signature", "No usable value"],
+        "range": ["#2a9d8f", "#e76f51", "#b8b8b8"]
+      }
+    },
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+      {"field": "column_combination", "type": "nominal", "title": "PII combination"},
+      {"field": "group_records", "type": "quantitative", "title": "Group rows", "format": ","},
+      {"field": "share", "type": "quantitative", "title": "Share", "format": ".1%"},
+      {"field": "maximum_one_to_one_assignment_share", "type": "quantitative", "title": "Maximum 1:1 assignments", "format": ".1%"},
+      {"field": "maximum_one_to_one_assignment_share_gap", "type": "quantitative", "title": "Gap from dataset", "format": "+.1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

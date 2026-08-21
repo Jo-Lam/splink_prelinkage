@@ -1,0 +1,22 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Exact submitted-row duplicates",
+    "subtitle": "No normalisation is applied"
+  },
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {"field": "source_dataset", "type": "nominal", "title": "Input"},
+    "y": {"field": "duplicate_record_share", "type": "quantitative", "title": "Rows in duplicate groups", "axis": {"format": ".0%"}},
+    "color": {"field": "source_dataset", "type": "nominal", "legend": null},
+    "tooltip": [
+      {"field": "columns_used", "type": "nominal", "title": "Exact columns"},
+      {"field": "duplicate_groups", "type": "quantitative", "title": "Duplicate groups", "format": ","},
+      {"field": "records_in_duplicate_groups", "type": "quantitative", "title": "Records in groups", "format": ","},
+      {"field": "excess_duplicate_rows", "type": "quantitative", "title": "Excess rows", "format": ","},
+      {"field": "largest_duplicate_group", "type": "quantitative", "title": "Largest group", "format": ","}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

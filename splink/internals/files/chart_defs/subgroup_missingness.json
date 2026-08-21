@@ -1,0 +1,25 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Missingness by auxiliary group",
+    "subtitle": "No automatic suppression is applied"
+  },
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "auxiliary_column", "type": "nominal", "title": null},
+    "y": {"field": "auxiliary_value", "type": "nominal", "title": "Auxiliary value", "sort": "-x"},
+    "x": {"field": "any_missing_share", "type": "quantitative", "title": "Rows with any linkage column missing", "axis": {"format": ".0%"}},
+    "color": {"field": "source_dataset", "type": "nominal", "title": "Input"},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Value"},
+      {"field": "group_records", "type": "quantitative", "title": "Group records", "format": ","},
+      {"field": "any_missing_share", "type": "quantitative", "title": "Any missing", "format": ".1%"},
+      {"field": "most_common_incomplete_pattern", "type": "nominal", "title": "Most common incomplete pattern"},
+      {"field": "most_common_incomplete_pattern_share", "type": "quantitative", "title": "Pattern share", "format": ".1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

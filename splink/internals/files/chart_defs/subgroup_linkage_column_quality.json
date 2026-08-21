@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Linkage-column quality by auxiliary group",
+    "subtitle": "Within-group structural metrics; observed linkage performance is not assessed"
+  },
+  "transform": [
+    {
+      "fold": ["usable_completeness", "repeated_record_share", "top_5pct_values_record_share"],
+      "as": ["metric", "share"]
+    },
+    {
+      "calculate": "datum.metric === 'usable_completeness' ? 'Usable completeness' : datum.metric === 'repeated_record_share' ? 'Rows with repeated values' : 'Records in top 5% of values'",
+      "as": "metric_label"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "column_name", "type": "nominal", "title": "PII field", "sort": {"field": "column_order", "order": "ascending"}},
+    "row": {"field": "auxiliary_column", "type": "nominal", "title": "Auxiliary column", "sort": {"field": "auxiliary_order", "order": "ascending"}},
+    "x": {"field": "auxiliary_value", "type": "nominal", "title": "Auxiliary value", "sort": {"field": "group_records", "order": "descending"}, "axis": {"labelAngle": -30}},
+    "xOffset": {"field": "metric_label"},
+    "y": {"field": "share", "type": "quantitative", "title": "Share", "scale": {"domain": [0, 1]}, "axis": {"format": ".0%"}},
+    "color": {"field": "metric_label", "type": "nominal", "title": "Metric"},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "auxiliary_value", "type": "nominal", "title": "Group"},
+      {"field": "column_name", "type": "nominal", "title": "PII field"},
+      {"field": "group_records", "type": "quantitative", "title": "Group rows", "format": ","},
+      {"field": "metric_label", "type": "nominal", "title": "Metric"},
+      {"field": "share", "type": "quantitative", "title": "Share", "format": ".1%"},
+      {"field": "usable_completeness_gap", "type": "quantitative", "title": "Completeness gap", "format": "+.1%"},
+      {"field": "repeated_record_share_gap", "type": "quantitative", "title": "Repetition gap", "format": "+.1%"},
+      {"field": "top_5pct_values_record_share_gap", "type": "quantitative", "title": "Top-5% gap", "format": "+.1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

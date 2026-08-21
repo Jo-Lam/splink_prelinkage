@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Exact-signature ambiguity",
+    "subtitle": "Structural uniqueness by linkage-column combination; not an estimate of linkage accuracy"
+  },
+  "transform": [
+    {
+      "fold": ["unique_record_share", "ambiguous_record_share", "unusable_record_share"],
+      "as": ["metric", "share"]
+    },
+    {
+      "calculate": "datum.metric === 'unique_record_share' ? 'Unique signature' : datum.metric === 'ambiguous_record_share' ? 'Ambiguous signature' : 'No usable value'",
+      "as": "metric_label"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null},
+    "x": {
+      "field": "column_combination",
+      "type": "nominal",
+      "title": "Exact linkage-column signature",
+      "sort": {"field": "combination_order", "order": "ascending"},
+      "axis": {"labelAngle": -30}
+    },
+    "y": {
+      "field": "share",
+      "type": "quantitative",
+      "title": "Share of all rows",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"},
+      "stack": "zero"
+    },
+    "color": {
+      "field": "metric_label",
+      "type": "nominal",
+      "title": "Signature status",
+      "scale": {
+        "domain": ["Unique signature", "Ambiguous signature", "No usable value"],
+        "range": ["#2a9d8f", "#e76f51", "#b8b8b8"]
+      }
+    },
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "column_combination", "type": "nominal", "title": "Columns"},
+      {"field": "metric_label", "type": "nominal", "title": "Status"},
+      {"field": "share", "type": "quantitative", "title": "Row share", "format": ".1%"},
+      {"field": "largest_signature_group", "type": "quantitative", "title": "Largest exact group", "format": ","},
+      {"field": "maximum_one_to_one_assignment_share", "type": "quantitative", "title": "Maximum 1:1 assignments", "format": ".1%"}
+    ]
+  },
+  "resolve": {"scale": {"x": "independent"}},
+  "config": {"view": {"stroke": null}}
+}

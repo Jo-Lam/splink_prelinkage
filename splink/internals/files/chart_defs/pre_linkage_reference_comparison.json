@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Pre-linkage profile compared with reference",
+    "subtitle": "Descriptive aggregate differences; the reference is not truth or a pass/fail threshold"
+  },
+  "transform": [
+    {"fold": ["current_value", "reference_value"], "as": ["profile_role", "value"]},
+    {"calculate": "datum.profile_role === 'current_value' ? datum.current_label : datum.reference_label", "as": "profile_label"},
+    {"filter": "isValid(datum.value)"}
+  ],
+  "mark": {"type": "point", "filled": true, "size": 80},
+  "encoding": {
+    "facet": {"field": "comparison_section", "type": "nominal", "columns": 1, "title": null},
+    "x": {"field": "value", "type": "quantitative", "title": "Metric value", "axis": {"format": ".1%"}},
+    "y": {"field": "item", "type": "nominal", "title": null},
+    "shape": {"field": "profile_label", "type": "nominal", "title": "Profile"},
+    "color": {"field": "metric", "type": "nominal", "title": "Metric"},
+    "tooltip": [
+      {"field": "comparison_section", "type": "nominal", "title": "Section"},
+      {"field": "item", "type": "nominal", "title": "Item"},
+      {"field": "metric", "type": "nominal", "title": "Metric"},
+      {"field": "profile_label", "type": "nominal", "title": "Profile"},
+      {"field": "value", "type": "quantitative", "title": "Value", "format": ".1%"},
+      {"field": "difference", "type": "quantitative", "title": "Current minus reference", "format": "+.1%"}
+    ]
+  },
+  "config": {"view": {"stroke": null}}
+}

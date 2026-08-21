@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"values": []},
+  "title": {
+    "text": "Linkage-column quality",
+    "subtitle": "Blank-aware completeness, distinctness and duplicate pressure; no identifier values are shown"
+  },
+  "transform": [
+    {
+      "fold": ["usable_completeness", "distinct_value_rate", "singleton_record_share"],
+      "as": ["metric", "share"]
+    },
+    {
+      "calculate": "datum.metric === 'usable_completeness' ? 'Usable completeness' : datum.metric === 'distinct_value_rate' ? 'Distinct values / observed rows' : 'Rows with a singleton value'",
+      "as": "metric_label"
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "column": {"field": "source_dataset", "type": "nominal", "title": null},
+    "x": {
+      "field": "column_name",
+      "type": "nominal",
+      "title": "Linkage column",
+      "sort": {"field": "column_order", "order": "ascending"},
+      "axis": {"labelAngle": -30}
+    },
+    "xOffset": {"field": "metric_label"},
+    "y": {
+      "field": "share",
+      "type": "quantitative",
+      "title": "Share of rows",
+      "scale": {"domain": [0, 1]},
+      "axis": {"format": ".0%"}
+    },
+    "color": {"field": "metric_label", "type": "nominal", "title": "Measure"},
+    "tooltip": [
+      {"field": "source_dataset", "type": "nominal", "title": "Input"},
+      {"field": "column_name", "type": "nominal", "title": "Column"},
+      {"field": "metric_label", "type": "nominal", "title": "Measure"},
+      {"field": "share", "type": "quantitative", "title": "Share", "format": ".1%"},
+      {"field": "observed_rows", "type": "quantitative", "title": "Usable rows", "format": ","},
+      {"field": "distinct_values", "type": "quantitative", "title": "Distinct values", "format": ","},
+      {"field": "largest_value_share", "type": "quantitative", "title": "Largest value share", "format": ".1%"}
+      ,{"field": "top_5pct_values_record_share", "type": "quantitative", "title": "Top 5% of values", "format": ".1%"}
+    ]
+  },
+  "resolve": {"scale": {"x": "independent"}},
+  "config": {"view": {"stroke": null}}
+}
